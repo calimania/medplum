@@ -97,7 +97,7 @@ function loadEnvConfig(): MedplumServerConfig {
   const config: Record<string, any> = {};
   // Iterate over all environment variables
   for (const [name, value] of Object.entries(process.env)) {
-    if (!name.startsWith('MEDPLUM_')) {
+    if (!name.startsWith('MEDPLUM_') && !name.startsWith('AWS_')) {
       continue;
     }
 
@@ -107,6 +107,11 @@ function loadEnvConfig(): MedplumServerConfig {
     if (key.startsWith('DATABASE_')) {
       key = key.substring('DATABASE_'.length);
       currConfig = config.database = config.database ?? {};
+
+      if (key.startsWith('SSL_')) {
+        key = key.substring('SSL_'.length);
+        currConfig = config.database.ssl = config.database.ssl ?? {};
+      }
     } else if (key.startsWith('REDIS_')) {
       key = key.substring('REDIS_'.length);
       currConfig = config.redis = config.redis ?? {};

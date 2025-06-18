@@ -37,6 +37,7 @@ export interface MedplumServerConfig {
   maxBatchSize: string;
   allowedOrigins?: string;
   awsRegion: string;
+  awsEndpoint?: string;
   botLambdaRoleArn: string;
   botLambdaLayerName: string;
   botCustomFunctionsEnabled?: boolean;
