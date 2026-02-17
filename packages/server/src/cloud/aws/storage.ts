@@ -21,7 +21,12 @@ export class S3Storage extends BaseBinaryStorage {
 
   constructor(bucket: string) {
     super();
-    this.client = new S3Client({ region: getConfig().awsRegion });
+    const config = getConfig();
+    this.client = new S3Client({
+      region: config.awsRegion,
+      endpoint: config.awsEndpoint || undefined,
+      forcePathStyle: true,
+    });
     this.bucket = bucket;
   }
 
